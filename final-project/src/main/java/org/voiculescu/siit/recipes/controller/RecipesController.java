@@ -10,7 +10,7 @@ import org.voiculescu.siit.recipes.model.*;
 import org.voiculescu.siit.recipes.service.RecipeService;
 import org.voiculescu.siit.recipes.util.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 
 @Slf4j
