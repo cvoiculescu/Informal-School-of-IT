@@ -3,6 +3,7 @@ package org.voiculescu.siit.recipes.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.voiculescu.siit.recipes.dao.RecipeRepository;
 import org.voiculescu.siit.recipes.model.Recipe;
 import org.voiculescu.siit.recipes.model.RecipeCategory;
@@ -27,6 +28,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Recipe findById(long id) {
         Optional<Recipe> result = recipeRepository.findById(id);
         Recipe recipe;
@@ -49,6 +51,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Recipe> findByCategory(RecipeCategory category) {
         List<Recipe> results;
         if (category != null) {

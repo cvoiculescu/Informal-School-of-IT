@@ -55,6 +55,14 @@ public class Recipe {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate lastModified;
 
+    public String getIngredientsList() {
+        return ingredients.replaceAll(System.lineSeparator(),"'&lt;br /&gt;");
+    }
+
+    public String getDirectionsList() {
+        return directions.replaceAll(System.lineSeparator(),"'&lt;br /&gt;");
+    }
+
     public String getImage() {
         if (image != null) {
             return getEncoder().encodeToString(image);

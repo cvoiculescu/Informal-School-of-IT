@@ -1,5 +1,5 @@
 volumes:
-  mysql-data:
+  postgres-data:
 
 services:
   app:
@@ -9,10 +9,10 @@ services:
       dockerfile: Dockerfile
     environment:
       # NOTE: POSTGRES_DB/USER/PASSWORD should match values in db container
-        MYSQL_ROOT_PASSWORD: P@ssw0rd
-        MYSQL_DATABASE: recipes
-        MYSQL_USER: user
-        MYSQL_PASSWORD: P@ssw0rd
+        POSTGRES_PASSWORD: P@ssw0rd
+        POSTGRES_USER: user
+        POSTGRES_DB: P@ssw0rd
+        POSTGRES_HOSTNAME: postgresdb
 
 #    volumes:
 #      - ../..:/workspaces:cached
@@ -27,16 +27,16 @@ services:
     # (Adding the "ports" property to this file will not forward from a Codespace.)
 
   db:
-    container_name: mysql
-    image: mysql:latest
+    container_name: postgresdb
+    image: postgres:16.2-alpine
     restart: unless-stopped
     volumes:
-      - mysql-data:/var/lib/mysql
+      - postgres-data:/var/lib/postgresql/data
     environment:
-      MYSQL_ROOT_PASSWORD: P@ssw0rd
-      MYSQL_DATABASE: recipes
-      MYSQL_USER: user
-      MYSQL_PASSWORD: P@ssw0rd
-      forwardPorts: 3306
+      # NOTE: POSTGRES_DB/USER/PASSWORD should match values in app container
+      POSTGRES_PASSWORD: P@ssw0rd
+      POSTGRES_USER: user
+      POSTGRES_DB: recipes
+
     # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)

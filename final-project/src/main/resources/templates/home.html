@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${title}">Recipes</title>
-    <div th:include="fragments/bootstrap::css"></div>
+    <div th:insert="~{fragments/bootstrap::css}"></div>
 </head>
 <body>
-<div th:include="fragments/general::nav"></div>
+<div th:insert="~{fragments/general::nav}"></div>
 <div class="container container-sm mt-5">
     <div class="row">
         <div class="col-md-4 mb-3" th:each="recipe : ${recipes}">
@@ -38,6 +38,6 @@
         </div>
     </div>
 </div>
-<div th:include="fragments/bootstrap::js"></div>
+<div th:insert="~{fragments/bootstrap::css}"></div>
 </body>
 </html>

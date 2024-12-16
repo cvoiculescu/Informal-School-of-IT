@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Show Recipe</title>
-    <div th:include="fragments/bootstrap::css"/>
+    <div th:insert="~{fragments/bootstrap::css}"></div>
 </head>
 <body>
-<div th:include="fragments/general::nav"></div>
+<div th:insert="~{fragments/general::nav}"></div>
 <div class="container container-sm mt-5" th:object="${recipe}">
     <h3 class="h3 mb-3" th:text="${recipe.name}"></h3>
     <div class="row">
@@ -17,11 +17,11 @@
             <h4 class="h4">Short description:</h4>
             <p class="ml-5" th:text="${recipe.shortDescription}"></p>
             <h4 class="h4">Ingredients:</h4>
-            <p class="ml-5" th:utext="${#strings.replace(recipe.ingredients, T(System).getProperty('line.separator'), '&lt;br /&gt;')}"></p>
+            <p class="ml-5" th:utext="${#strings.unescapeJava(#strings.replace(#strings.escapeJava(recipe.ingredients),'\n','&lt;br /&gt;'))}"></p>
         </div>
         <div class="col-sm-12 mt-2">
             <h4 class="h4">Directions:</h4>
-            <p class="text-justify" th:utext="${#strings.replace(recipe.directions, T(System).getProperty('line.separator'), '&lt;br /&gt;')}"></p>
+            <p class="text-justify" th:utext="${#strings.unescapeJava(#strings.replace(#strings.escapeJava(recipe.directions),'\n','&lt;br /&gt;'))}"></p>
         </div>
         <div class="btn-group col-sm-3 offset-sm-4 justify-content-end mt-4">
             <a class="btn btn-outline-primary mr-1" href="/edit" th:text="Edit" th:href="@{'/edit/'+${recipe.id}}"></a>
@@ -30,6 +30,6 @@
         </div>
     </div>
 </div>
-<div th:include="fragments/bootstrap::js"/>
+<div th:insert="~{fragments/bootstrap::js}"></div>
 </body>
 </html>

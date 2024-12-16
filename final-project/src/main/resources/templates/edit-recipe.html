@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Recipe</title>
-    <div th:include="fragments/bootstrap::css"></div>
+    <div th:insert="~{fragments/bootstrap::css}"></div>
 </head>
 <body>
-<div th:include="fragments/general::nav"></div>
+<div th:insert="~{fragments/general::nav}"></div>
 <div class="container mt-5">
     <form action="#" th:action="@{/update}" th:object="${recipe}" method="post" enctype="multipart/form-data">
         <input type="hidden" th:field="*{id}" th:value="*{id}">
@@ -70,6 +70,6 @@
         <input type="submit" value="Update Recipe" class="btn btn-outline-primary">
     </form>
 </div>
-<div th:include="fragments/bootstrap::js"></div>
+<div th:insert="~{fragments/bootstrap::css}"></div>
 </body>
 </html>
