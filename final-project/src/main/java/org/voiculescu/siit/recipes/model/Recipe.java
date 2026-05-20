@@ -11,6 +11,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.proxy.HibernateProxy;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
+import org.voiculescu.siit.recipes.util.RecipeSanitizer;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -56,19 +57,41 @@ public class Recipe {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate lastModified;
 
-    public String getIngredientsList() {
-        return ingredients.replaceAll(System.lineSeparator(),"'&lt;br /&gt;");
+    public Recipe setName(String name) {
+        this.name = RecipeSanitizer.sanitizePlainText(name);
+        return this;
     }
 
-    public String getDirectionsList() {
-        return directions.replaceAll(System.lineSeparator(),"'&lt;br /&gt;");
+    public Recipe setShortDescription(String shortDescription) {
+        this.shortDescription = RecipeSanitizer.sanitizePlainText(shortDescription);
+        return this;
     }
+
+    public Recipe setIngredients(String ingredients) {
+        this.ingredients = RecipeSanitizer.sanitizePlainText(ingredients);
+        return this;
+    }
+
+    public Recipe setDirections(String directions) {
+        this.directions = RecipeSanitizer.sanitizePlainText(directions);
+        return this;
+    }
+
 
     public String getImage() {
         if (image != null) {
             return getEncoder().encodeToString(image);
         }
         return null;
+    }
+
+    public byte[] getImageBytes() {
+        return image == null ? null : image.clone();
+    }
+
+    public Recipe setImageBytes(byte[] image) {
+        this.image = image == null ? null : image.clone();
+        return this;
     }
 
     public Recipe setImage(MultipartFile image) {

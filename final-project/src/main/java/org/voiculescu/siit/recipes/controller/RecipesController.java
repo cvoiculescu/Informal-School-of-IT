@@ -48,7 +48,7 @@ public class RecipesController {
     }
 
     @GetMapping(Mappings.SHOW_BY_CATEGORY)
-    public ModelAndView showCategory(@PathVariable(Mappings.CATEGORY) String category) {
+    public ModelAndView showCategory(@PathVariable String category) {
         RecipeCategory recipeCategory = RecipeCategory.getRecipeCategoryByPath(category);
         if (recipeCategory == null) {
             return new ModelAndView(Mappings.REDIRECT + Mappings.HOME);
@@ -61,16 +61,16 @@ public class RecipesController {
     }
 
     @GetMapping(Mappings.VIEW_BY_ID)
-    public ModelAndView showRecipe(@PathVariable(Mappings.ID) long id) {
-        Recipe recipe = recipeService.findById(id);
+    public ModelAndView showRecipe(@PathVariable long id) {
+        Recipe recipe = RecipeSanitizer.sanitizeForView(recipeService.findById(id));
         ModelAndView modelAndView = new ModelAndView(Views.SHOW_RECIPE);
         modelAndView.addObject(Attributes.RECIPE, recipe);
         return modelAndView;
     }
 
     @GetMapping(Mappings.EDIT_BY_ID)
-    public ModelAndView showEditRecipe(@PathVariable(Mappings.ID) long id) {
-        Recipe recipe = recipeService.findById(id);
+    public ModelAndView showEditRecipe(@PathVariable long id) {
+        Recipe recipe = RecipeSanitizer.sanitizeForView(recipeService.findById(id));
         ModelAndView modelAndView = new ModelAndView(Views.EDIT);
         modelAndView.addObject(Attributes.RECIPE, recipe);
         return modelAndView;
@@ -84,7 +84,7 @@ public class RecipesController {
     }
 
     @GetMapping(Mappings.DELETE_BY_ID)
-    public String deleteById(@PathVariable(Mappings.ID) long id) {
+    public String deleteById(@PathVariable long id) {
         recipeService.deleteById(id);
         return Mappings.REDIRECT + Mappings.HOME;
     }
