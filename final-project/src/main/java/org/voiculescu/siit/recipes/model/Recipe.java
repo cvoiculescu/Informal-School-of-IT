@@ -29,7 +29,8 @@ public class Recipe {
 
     @EqualsAndHashCode.Include
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "recipe_seq", sequenceName = "recipe_seq", allocationSize = 1)
     private Long id;
     @Size(min = 6, message = "minimum 6 characters")
     private String name;
